@@ -14,11 +14,11 @@ class CombinationalSumSolver:
         optimal_solution: List[float] = self.find_optimal(all_solutions)
         # TODO convert optimal_solution to CombinationalSumSolution
 
-    def gather_solutions(self, state: List[float], all_solutions: List[float]) -> None:
-        if sum(state.values) == self.problem.target:
+    def gather_solutions(self, state: List[float], all_solutions: List[List[float]]) -> None:
+        if sum(state) == self.problem.target:
             all_solutions.append(state)
-        elif sum(state.values) < self.problem.target:
-            for item in self.problem.available_values.filter(lambda x: x != 0.0):
+        elif sum(state) < self.problem.target:
+            for item in filter(lambda x: x != 0.0, self.problem.available_values):
                 new_state = state
                 new_state.append(item)
                 self.gather_solutions(new_state, all_solutions)
