@@ -24,4 +24,5 @@ class CombinationalSumSolver:
                 self.gather_solutions(new_state, all_solutions)
 
     def find_optimal(self, possible_solutions: List[List[float]]) -> List[float]:
+        # TODO find the option that is the most even between the possibilities
         raise NotImplementedError
