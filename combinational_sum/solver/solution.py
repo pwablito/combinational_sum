@@ -1,7 +1,6 @@
+from typing import Dict
+
+
 class CombinationalSumSolution:
-    def __init__(self):
-        self.values = {}
-
-    def set_value(self, key, value):
-        self.values[key] = value
-
+    def __init__(self, values):
+        self.values: Dict[str, int] = values

@@ -1,10 +1,10 @@
-from typing import List
+from typing import Dict
 
 
 class CombinationalSumProblem:
-    def __init__(self, target: float, available_values: List[float]):
+    def __init__(self, target: float, options: Dict[str, float]):
         self.target = target
-        self.available_values = available_values
+        self.options = options
 
     @staticmethod
     def from_strings(target_string: str, values_str: str):

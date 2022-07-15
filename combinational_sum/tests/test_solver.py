@@ -5,7 +5,11 @@ from combinational_sum.solver.solver import CombinationalSumSolver
 def test_gather_solutions():
     problem = CombinationalSumProblem(
         10.0,
-        [5.0, 4.0, 1.0]
+        {
+            "item1": 5.0,
+            "item2": 4.0,
+            "item3": 1.0,
+        }
     )
     solver = CombinationalSumSolver(problem)
     all_solutions = []
