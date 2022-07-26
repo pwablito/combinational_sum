@@ -30,6 +30,7 @@ class CombinationalSumSolver:
         total = 0
         for key, value in state.items():
             total += (self.problem.options[key] * value)
+        return total
 
     def find_optimal(self, possible_solutions: List[Dict[str, int]]) -> Dict[str, int]:
         best_solution = None
