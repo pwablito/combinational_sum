@@ -15,7 +15,7 @@ class CombinationalSumSolver:
         return self.find_optimal(all_solutions)
 
     def gather_solutions(self, state: Dict[str, int], all_solutions: List[Dict[str, int]]) -> None:
-        if self.state_sum(state) == self.problem.target:
+        if self.state_sum(state) == self.problem.target and state not in all_solutions:
             all_solutions.append(state)
         elif self.state_sum(state) < self.problem.target:
             for key, value in self.problem.options.items():
