@@ -20,7 +20,7 @@ class CombinationalSumSolver:
         elif self.state_sum(state) < self.problem.target:
             for key, value in self.problem.options.items():
                 if value != 0.0:
-                    new_state = state
+                    new_state = state.copy()
                     if key not in new_state:
                         new_state[key] = 0
                     new_state[key] += 1
