@@ -13,9 +13,13 @@ def test_gather_solutions():
     )
     solver = CombinationalSumSolver(problem)
     all_solutions = []
-    solver.gather_solutions([], all_solutions)
+    solver.gather_solutions({}, all_solutions)
     assert len(all_solutions)
-    assert [5.0, 4.0, 1.0] in all_solutions
+    assert {
+        "item1": 1,
+        "item2": 1,
+        "item3": 1,
+    } in all_solutions
 
 
 def test_find_optimal():
