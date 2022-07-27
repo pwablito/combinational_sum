@@ -3,6 +3,7 @@ from combinational_sum.solver.solution import CombinationalSumSolution
 
 from typing import List, Dict
 import math
+import statistics
 
 
 class CombinationalSumSolver:
@@ -33,6 +34,7 @@ class CombinationalSumSolver:
         return total
 
     def find_optimal(self, possible_solutions: List[Dict[str, int]]) -> Dict[str, int]:
+        # TODO account for cases where score is perfect but solution is missing items
         best_solution = None
         best_score = math.inf
         for solution in possible_solutions:
@@ -42,11 +44,12 @@ class CombinationalSumSolver:
                 best_solution = solution
         return best_solution
 
-    def get_score(self, solution: Dict[str, int]):
+    def get_score(self, solution: Dict[str, int]) -> float:
         counts = {key: 0 for key in self.problem.options.keys()}
-        for name, count in solution:
+        for name, count in solution.items():
             counts[name] += count
-        median = math.median(counts.values())
+        median = statistics.median(counts.values())
         score = 0
-        for item in counts:
-            score += math.abs(item - median)
+        for count in counts.values():
+            score += abs(count - median)
+        return score
