@@ -43,3 +43,8 @@ def test_find_optimal():
     assert optimal
     assert len(optimal)
     assert optimal in possible_solutions
+    assert optimal == {
+        "item1": 1,
+        "item2": 1,
+        "item3": 1,
+    }
