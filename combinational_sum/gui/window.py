@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
             self.output_text.setText("Solving...")
             solver = CombinationalSumSolver(problem)
             solution = solver.solve()
-            self.output_text.setText(json.dumps(solution))
+            self.output_text.setText(json.dumps(solution.values))
         except NotImplementedError:
             self.output_text.setText("Something wasn't implemented...")
         except ValueError:
