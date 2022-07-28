@@ -8,6 +8,7 @@ class CombinationalSumProblem:
 
     @staticmethod
     def from_strings(target_string: str, values_str: str):
+        # TODO values should be a dict with names as keys now. Update this in ui too
         values = []
         for item in values_str.replace(" ", "").split(","):
             values.append(float(item))
