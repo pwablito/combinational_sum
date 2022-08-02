@@ -1,7 +1,7 @@
 import json
 import math
 
-from PyQt5.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton, QPlainTextEdit
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QDoubleValidator
 
@@ -29,8 +29,8 @@ class MainWindow(QMainWindow):
 
         available_values_line_label = QLabel(self)
         available_values_line_label.setText("Available values:")
-        self.available_values_line = QLineEdit(self)
-        self.available_values_line.setValidator(QDoubleValidator(-math.inf, math.inf, 2))
+        self.available_values_line = QPlainTextEdit(self)
+        # self.available_values_line.setValidator(QDoubleValidator(-math.inf, math.inf, 2))
         self.available_values_line.move(120, 60)
         available_values_line_label.move(20, 60)
 
@@ -47,11 +47,11 @@ class MainWindow(QMainWindow):
 
     def on_click(self):
         self.output_text.setText(
-            f"Target value: {self.target_value_line.text()}\nAvailable values: {self.available_values_line.text()}"
+            f"Target value: {self.target_value_line.text()}\nAvailable values: {self.available_values_line.toPlainText()}"
         )
         try:
             problem = CombinationalSumProblem.from_strings(
-                self.target_value_line.text(), self.available_values_line.text(),
+                self.target_value_line.text(), self.available_values_line.toPlainText(),
             )
             self.output_text.setText("Solving...")
             solver = CombinationalSumSolver(problem)

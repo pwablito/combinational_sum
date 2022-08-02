@@ -8,8 +8,9 @@ class CombinationalSumProblem:
 
     @staticmethod
     def from_strings(target_string: str, values_str: str):
-        # TODO values should be a dict with names as keys now. Update this in ui too
-        values = []
-        for item in values_str.replace(" ", "").split(","):
-            values.append(float(item))
+        values = {}
+        counter = 1
+        for item in values_str.replace(" ", "").split("\n"):
+            values[f"{counter}-{item}"] = float(item.replace("$", ""))
+            counter += 1
         return CombinationalSumProblem(float(target_string), values)
