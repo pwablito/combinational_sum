@@ -1,4 +1,3 @@
-import json
 import math
 
 from PyQt5.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton, QPlainTextEdit
@@ -14,6 +13,9 @@ WINDOW_START_LOCATION = (50, 50)
 
 
 class MainWindow(QMainWindow):
+
+    INSTRUCTIONS_TEXT = "Enter target and available numbers, then click \"Calculate\""
+
     def __init__(self):
         QMainWindow.__init__(self)
 
@@ -27,41 +29,59 @@ class MainWindow(QMainWindow):
         self.target_value_line.move(120, 20)
         target_value_line_label.move(20, 20)
 
-        available_values_line_label = QLabel(self)
-        available_values_line_label.setText("Available values:")
-        self.available_values_line = QPlainTextEdit(self)
-        # self.available_values_line.setValidator(QDoubleValidator(-math.inf, math.inf, 2))
-        self.available_values_line.move(120, 60)
-        available_values_line_label.move(20, 60)
-
         calculate_button = QPushButton("Calculate", self)
         calculate_button.clicked.connect(self.on_click)
-        calculate_button.resize(200, 32)
-        calculate_button.move(80, 100)
+        calculate_button.resize(100, 32)
+        calculate_button.move(240, 20)
 
-        self.output_text = QLabel(self)
-        self.output_text.setText("Enter target and available numbers, then click \"Calculate\"")
-        self.output_text.resize(300, 250)
-        self.output_text.setWordWrap(True)
-        self.output_text.move(20, 140)
+        available_values_box_label = QLabel(self)
+        available_values_box_label.setText("Available values:")
+        self.available_values_box = QPlainTextEdit(self)
+        self.available_values_box.resize(80, 200)
+        self.available_values_box.move(40, 90)
+        available_values_box_label.move(40, 60)
+
+        solution_box_label = QLabel(self)
+        solution_box_label.setText("Solution:")
+        self.solution_box = QPlainTextEdit(self)
+        self.solution_box.resize(80, 200)
+        self.solution_box.move(220, 90)
+        solution_box_label.move(220, 60)
+
+        self.status_text = QLabel(self)
+        self.status_text.setText(self.INSTRUCTIONS_TEXT)
+        self.status_text.resize(300, 250)
+        self.status_text.setWordWrap(True)
+        self.status_text.move(20, 220)
 
     def on_click(self):
-        self.output_text.setText(
-            f"Target value: {self.target_value_line.text()}\nAvailable values: {self.available_values_line.toPlainText()}"
-        )
         try:
+            self.solution_box.setPlainText("")
             problem = CombinationalSumProblem.from_strings(
-                self.target_value_line.text(), self.available_values_line.toPlainText(),
+                self.target_value_line.text(), self.available_values_box.toPlainText(),
             )
-            self.output_text.setText("Solving...")
+            self.status_text.setText("Solving...")
             solver = CombinationalSumSolver(problem)
             solution = solver.solve()
-            self.output_text.setText(json.dumps(solution.values))
+            if not solution.values:
+                raise NoSolutionFoundError()
+            self.solution_box.setPlainText(
+                "\n".join([
+                    f"{key.split(' ')[1]}: {value}" for key, value in solution.values.items()
+                ])
+            )
+            self.status_text.setText(self.INSTRUCTIONS_TEXT)
         except NotImplementedError:
-            self.output_text.setText("Something wasn't implemented...")
+            self.status_text.setText("Error: Something wasn't implemented...")
         except ValueError:
-            self.output_text.setText("Failed to parse the input...")
+            self.status_text.setText("Error: Failed to parse the input...")
+        except NoSolutionFoundError:
+            self.status_text.setText("No solution found")
 
     def run(self):
         self.widget.show()
         self.app.exec_()
+
+
+class NoSolutionFoundError(Exception):
+    pass

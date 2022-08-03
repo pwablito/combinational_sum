@@ -13,7 +13,8 @@ class CombinationalSumSolver:
     def solve(self) -> CombinationalSumSolution:
         all_solutions: List[Dict[str, int]] = []
         self.gather_solutions({}, all_solutions)
-        return self.find_optimal(all_solutions)
+        optimal = self.find_optimal(all_solutions)
+        return CombinationalSumSolution(optimal)
 
     def gather_solutions(self, state: Dict[str, int], all_solutions: List[Dict[str, int]]) -> None:
         if self.state_sum(state) == self.problem.target and state not in all_solutions:

@@ -11,6 +11,6 @@ class CombinationalSumProblem:
         values = {}
         counter = 1
         for item in values_str.replace(" ", "").split("\n"):
-            values[f"{counter}-{item}"] = float(item.replace("$", ""))
+            values[f"{counter} ({item})"] = float(item.replace("$", ""))
             counter += 1
         return CombinationalSumProblem(float(target_string), values)
