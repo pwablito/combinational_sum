@@ -16,7 +16,9 @@ class CombinationalSumSolver:
         optimal = self.find_optimal(all_solutions)
         return CombinationalSumSolution(optimal)
 
-    def gather_solutions(self, state: Dict[str, int], all_solutions: List[Dict[str, int]]) -> None:
+    def gather_solutions(
+        self, state: Dict[str, int], all_solutions: List[Dict[str, int]]
+    ) -> None:
         if self.state_sum(state) == self.problem.target and state not in all_solutions:
             all_solutions.append(state)
         elif self.state_sum(state) < self.problem.target:
@@ -31,7 +33,7 @@ class CombinationalSumSolver:
     def state_sum(self, state: Dict[str, int]):
         total = 0
         for key, value in state.items():
-            total += (self.problem.options[key] * value)
+            total += self.problem.options[key] * value
         return total
 
     def find_optimal(self, possible_solutions: List[Dict[str, int]]) -> Dict[str, int]:
@@ -43,6 +45,7 @@ class CombinationalSumSolver:
             if best_score > solution_score:
                 best_score = solution_score
                 best_solution = solution
+        assert best_solution
         return best_solution
 
     def get_score(self, solution: Dict[str, int]) -> float:
